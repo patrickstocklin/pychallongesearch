@@ -2,9 +2,9 @@
 class indices(object):
 
 	#Maybe move these elsewhere
-	TOURNAMENT_INDEX_NAME 		= 'tournaments'
-	PLAYER_INDEX_NAME 			= 'players'
-	MATCH_INDEX_NAME 			= 'matches'
+	TOURNAMENT_INDEX_NAME = 'tournaments'
+	PLAYER_INDEX_NAME = 'players'
+	MATCH_INDEX_NAME = 'matches'
 
 	def __init__(self, elasticsearch_client, logger):
 		self.elasticsearch_client = elasticsearch_client

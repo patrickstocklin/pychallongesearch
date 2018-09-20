@@ -12,16 +12,16 @@ import json
 import logging
 
 '''
-########################################################################################################################
-#	PyChallongeSearch
+############################################################################################################################
+#    PyChallongeSearch
 #
-#	Author: Patrick C. Stocklin
+#    Author: Patrick C. Stocklin
 #	
-#		Python Wrapper to handle the creation, insertion, updating, and searching of player, tournament, and match stats
-#	within a self-defined, self-contained Elasticsearch instance. Useful for analysis across an aggregated collection of
-#	double-elimination Challonge Brackets.
+#        Python Wrapper to handle the creation, insertion, updating, and searching of player, tournament, and match stats
+#    within a self-defined, self-contained Elasticsearch instance. Useful for analysis across an aggregated collection of
+#    double-elimination Challonge Brackets.
 #
-########################################################################################################################
+############################################################################################################################
 '''
 
 class PyChallongeSearch(object):
