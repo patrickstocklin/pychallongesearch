@@ -18,8 +18,8 @@ import logging
 #    Author: Patrick C. Stocklin
 #	
 #        Python Wrapper to handle the creation, insertion, updating, and searching of player, tournament, and match stats
-#    within a self-defined, self-contained Elasticsearch cluster. Useful for analysis across an aggregated collection of
-#    double-elimination Challonge Brackets.
+#    within an Elasticsearch cluster. Useful for analysis across an aggregated collection of double-elimination Challonge 
+#    Brackets.
 #
 ############################################################################################################################
 '''
