@@ -12,8 +12,7 @@ import json
 import logging
 
 '''
-##################################################################
-#
+########################################################################################################################
 #	PyChallongeSearch
 #
 #	Author: Patrick C. Stocklin
@@ -22,7 +21,7 @@ import logging
 #	within a self-defined, self-contained Elasticsearch instance. Useful for analysis across an aggregated collection of
 #	double-elimination Challonge Brackets.
 #
-##################################################################
+########################################################################################################################
 '''
 
 class PyChallongeSearch(object):
