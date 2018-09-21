@@ -48,6 +48,8 @@ class PyChallongeSearch(object):
 		#Do a healthcheck, fail if bad conn
 
 		### ADD OTHER MODULES HERE
+
+		#Indices, Brackets (ingest), Query (search/retrieve, insert, update, delete), Stats
 		self.indices = indices.indices(self.elasticsearch_client, self.logger)
 		self.ingest = ingest.ingest(self.elasticsearch_client, self.logger)
 		self.insert = insert.insert(self.elasticsearch_client, self.logger)
