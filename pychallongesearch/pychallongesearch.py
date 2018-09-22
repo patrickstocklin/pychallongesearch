@@ -2,8 +2,8 @@
 from utils import challongefileutils
 from modules import indices
 from modules import brackets
-from modules import stats
 from modules import query
+from modules import stats
 from elasticsearch import Elasticsearch
 import json
 import logging
@@ -17,6 +17,13 @@ import logging
 #        Python Wrapper to handle the creation, insertion, updating, and searching of player, tournament, and match stats
 #    within an Elasticsearch cluster. Useful for analysis across an aggregated collection of double-elimination Challonge 
 #    Brackets.
+#
+#	 TO DO:
+#    1) challongefileutils, help me look at a bracket, split the contents into digestible bits, then insert
+#	 2) Work out query, then bracket (ingest)
+#
+#	 Nice to haves:
+#    Do we store constants somewhere?
 #
 ############################################################################################################################
 '''
@@ -42,12 +49,16 @@ class PyChallongeSearch(object):
 		# CLIENT AND MODULES
 		##################################################################
 		self.elasticsearch_client = Elasticsearch([host + ":" + port])
-		#Do a healthcheck, fail if bad conn
-
-		### ADD OTHER MODULES HERE
+		self.health_check()
 
 		#Indices, Brackets (ingest), Query (search/retrieve, insert, update, delete), Stats
 		self.indices = indices.indices(self.elasticsearch_client, self.logger)
 		self.brackets = brackets.brackets(self.elasticsearch_client, self.logger)
-		self.stats = stats.stats(self.elasticsearch_client, self.logger)
 		self.query = query.query(self.elasticsearch_client, self.logger)
+		self.stats = stats.stats(self.elasticsearch_client, self.logger)
+
+	def health_check(self):
+		if(self.elasticsearch_client.cluster.health()):
+			self.logger.info("Cluster is healthy!")
+		else:
+			raise Exception("Cluster is not healthy!")
