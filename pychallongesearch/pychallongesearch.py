@@ -1,12 +1,9 @@
 # -*- coding: utf-8 -*-
 from utils import challongefileutils
 from modules import indices
-from modules import ingest
-from modules import insert
-from modules import retrieve
-from modules import search
+from modules import brackets
 from modules import stats
-from modules import update
+from modules import query
 from elasticsearch import Elasticsearch
 import json
 import logging
@@ -51,9 +48,6 @@ class PyChallongeSearch(object):
 
 		#Indices, Brackets (ingest), Query (search/retrieve, insert, update, delete), Stats
 		self.indices = indices.indices(self.elasticsearch_client, self.logger)
-		self.ingest = ingest.ingest(self.elasticsearch_client, self.logger)
-		self.insert = insert.insert(self.elasticsearch_client, self.logger)
-		self.retrieve = retrieve.retrieve(self.elasticsearch_client, self.logger)
-		self.search = search.search(self.elasticsearch_client, self.logger)
+		self.brackets = brackets.brackets(self.elasticsearch_client, self.logger)
 		self.stats = stats.stats(self.elasticsearch_client, self.logger)
-		self.update = update.update(self.elasticsearch_client, self.logger)
+		self.query = query.query(self.elasticsearch_client, self.logger)
