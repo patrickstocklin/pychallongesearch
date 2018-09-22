@@ -52,15 +52,15 @@ class PyChallongeSearch(object):
 		self.health_check()
 
 		#Indices, Brackets (ingest), Query (search/retrieve, insert, update, delete), Stats
-		self.indices = indices.indices(self.elasticsearch_client, self.logger)
-		self.brackets = brackets.brackets(self.elasticsearch_client, self.logger)
-		self.query = query.query(self.elasticsearch_client, self.logger)
-		self.stats = stats.stats(self.elasticsearch_client, self.logger)
+		self.indices = indices.indices(self)
+		self.brackets = brackets.brackets(self)
+		self.query = query.query(self)
+		self.stats = stats.stats(self)
 
 		###################################################################
 		# FILESYSTEM HELPER FUNCTIONS (should take in a directory arg tbh)
 		###################################################################
-		self.challongefileutils = challongefileutils.challongefileutils(self.logger)
+		self.challongefileutils = challongefileutils.challongefileutils(self)
 
 	def health_check(self):
 		if(self.elasticsearch_client.cluster.health()):

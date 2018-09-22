@@ -12,7 +12,6 @@ def main():
 
 	# pcsearch.indices.create_elasticsearch_indices()
 	pcsearch.brackets.ingest_bracket();
-	pcsearch.challongefileutils.test()
 	# pcsearch.indices.delete_elasticsearch_indices()
 
 	# pcsearch.stats.test()   //analysis 

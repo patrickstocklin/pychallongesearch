@@ -8,9 +8,10 @@
 
 class challongefileutils(object):
 
-	def __init__(self, logger):
-		self.logger = logger
+	def __init__(self, parent):
+		self.parent = parent
+		self.logger = parent.logger
 		self.logger.info("challongefileutils created")
 
 	def test(self):
-		self.logger.info("challongefileutils test")
+		self.logger.info("challongefileutils testtt")
