@@ -57,6 +57,11 @@ class PyChallongeSearch(object):
 		self.query = query.query(self.elasticsearch_client, self.logger)
 		self.stats = stats.stats(self.elasticsearch_client, self.logger)
 
+		###################################################################
+		# FILESYSTEM HELPER FUNCTIONS (should take in a directory arg tbh)
+		###################################################################
+		self.challongefileutils = challongefileutils.challongefileutils(self.logger)
+
 	def health_check(self):
 		if(self.elasticsearch_client.cluster.health()):
 			self.logger.info("Cluster is healthy!")
