@@ -8,13 +8,41 @@
 * virtualenv
 * elasticsearch
 * challonge data (see [here](https://github.com/patrickstocklin/challonge-scraper))
-## Environment Setup
+
+## Local Environment 
+### Setup
 ```
 ~/$ git clone https://github.com/patrickstocklin/pychallongesearch.git
 ~/$ virtualenv --no-site-packages pychallongesearch
 
 ~/$ cd pychallongesearch
-~/pychallongesearch$ source bin/activate
 
-~/pychallongesearch$ pip install -r requirements.txt
+#Initial Virtualenv Setup
+~/pychallongesearch$ source .env
+(pychallongesearch)~/pychallongesearch$ pip install -r requirements.txt
+~/pychallongesearch$ source .deactivate-env
+```
+### Creation
+```
+~/pychallongesearch$ source ./scripts/create_local_environment.sh
+```
+
+### Elasticsearch Health Check
+```
+(pychallongesearch)~/pychallongesearch$ source ./scripts/health_check.sh
+```
+
+### Run Tests
+```
+(pychallongesearch)~/pychallongesearch$ source ./scripts/run_unit_tests.sh
+```
+
+### Teardown
+```
+(pychallongesearch)~/pychallongesearch$ source ./scripts/teardown_local_environment.sh
+```
+
+### Disaster (Killed Elasticsearch Cluster)
+```
+(pychallongesearch)~/pychallongesearch$ source ./scripts/destroy_elasticsearch_cluster.sh
 ```
