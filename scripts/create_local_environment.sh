@@ -12,6 +12,7 @@ START=`date +%s`
 while [ $(( $(date +%s) - 20 )) -lt $START ]; do
   sleep 3
   HTTPSTATUS=`curl -s -o /dev/null -L -w "%{http_code}" -H "Accept: application/json" -H "Content-type: application/json" http://localhost:9200/_cluster/health`
+  echo "HTTP Response code from localhost elasticsearch:"
   echo $HTTPSTATUS
   if [ $HTTPSTATUS -eq 200 ]; then
     echo "Elasticsearch Cluster Reached Healthy Status"
@@ -30,6 +31,6 @@ fi
 if [ $HTTPSTATUS -eq 200 ]; then
   echo "Elasticsearch Cluster Reached Healthy Status"
   echo "Execution of driver function"
-  python main.py
+  python deploy/ingest_tournament_data.py
 fi
 #Run your driver to insert data
