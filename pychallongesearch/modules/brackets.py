@@ -75,33 +75,34 @@ class brackets(object):
 			loser_id = int(match_json['match']['loser_id'])
 
 			if winner_id in participants_new_ids and loser_id in participants_new_ids:
-			# 	self.parent.matches.insert_match(winner_id, loser_id, match_json)
-			# 	self.parent.players.update_matches(winner_id, match_id)
-			# 	self.parent.players.update_matches(loser_id, match_id)
+				self.parent.matches.insert_match(winner_id, loser_id, match_json)
+			 	self.parent.players.update_player_matches(winner_id, match_json)
+			 	self.parent.players.update_player_matches(loser_id, match_json)
 				tournament_matches.append(match_id)
 
 			elif winner_id in participants_new_ids and loser_id not in participants_new_ids:
 				loser_existing_player_id = participants_old_player_ids_dict[loser_id]
-			# 	self.parent.matches.insert_match(winner_id, loser_existing_player_id, match_json)
-			# 	self.parent.players.update_matches(winner_id, match_id)
-			# 	self.parent.players.update_matches(loser_existing_player_id, match_id)
+				self.parent.matches.insert_match(winner_id, loser_existing_player_id, match_json)
+			 	self.parent.players.update_player_matches(winner_id, match_id)
+			 	self.parent.players.update_player_matches(loser_existing_player_id, match_id)
 				tournament_matches.append(match_id)
 
 			elif winner_id not in participants_new_ids and loser_id in participants_new_ids:
 				winner_existing_player_id = participants_old_player_ids_dict[winner_id]
-			# 	self.parent.matches.insert_match(winner_existing_player_id, loser_id, match_json)
-			# 	self.parent.players.update_matches(winner_existing_player_id, match_id)
-			# 	self.parent.players.update_matches(loser_id, match_id)
+				self.parent.matches.insert_match(winner_existing_player_id, loser_id, match_json)
+			 	self.parent.players.update_player_matches(winner_existing_player_id, match_id)
+			 	self.parent.players.update_player_matches(loser_id, match_id)
 				tournament_matches.append(match_id)
 
 			elif winner_id in participants_old_ids and loser_id in participants_old_ids:
 				winner_existing_player_id = participants_old_player_ids_dict[winner_id]
 				loser_existing_player_id = participants_old_player_ids_dict[loser_id]
-			# 	self.parent.matches.insert_match(winner_existing_player_id, loser_existing_player_id, match_json)
-			# 	self.parent.players.update_matches(winner_existing_player_id, match_id)
-			# 	self.parent.players.update_matches(loser_existing_player_id, match_id)
+				self.parent.matches.insert_match(winner_existing_player_id, loser_existing_player_id, match_json)
+			 	self.parent.players.update_player_matches(winner_existing_player_id, match_id)
+			 	self.parent.players.update_player_matches(loser_existing_player_id, match_id)
 				tournament_matches.append(match_id)
 
 		tournament_json = json.loads(tournament_arr[0])
+		#TODO
 		# self.parent.tournaments.insert_tournament(tournament_json, tournament_participants, tournament_participants)
 		return

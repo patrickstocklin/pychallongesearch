@@ -140,6 +140,15 @@ class players(object):
     if player_json['hits']['total'] > 0:
       return player_json['hits']['hits'][0]['_source']['tournaments']
 
+  '''
+  Arg: player_json
+  Abs: retrieves result from response
+  Ret: res int
+  TO DO: Perform all index refreshes in final call just before all match queries
+  '''
+  def retrieve_player_matches(self, player_json):
+    if player_json['hits']['total'] > 0:
+      return player_json['hits']['hits'][0]['_source']['matches']
 
   '''
   Arg: player_tag
@@ -147,12 +156,58 @@ class players(object):
   Ret: res int
   TO DO: Perform all index refreshes in final call just before all match queries
   '''
-  def update_player_seedings_and_placings(self, player_id, player_json):
+  def update_player_seedings_and_placings(self, player_id, participant_json):
     #self.logger.info("updating seedings and placings for player_id: %s" %str(player_id))
     target_player_json = self.search_for_player_by_id(player_id)
     target_player_tournaments = self.retrieve_player_tournaments(target_player_json)
     target_player_seedings = self.retrieve_player_seedings(target_player_json)
     target_player_placings = self.retrieve_player_placings(target_player_json)
-    print target_player_json['hits']['hits'][0]['_source']['tag']
-    print target_player_seedings
-    print target_player_placings
+    tournament_id = int(participant_json['participant']['tournament_id'])
+
+    target_player_seedings[tournament_id] = int(participant_json['participant']['seed'])
+    target_player_placings[tournament_id] = int(participant_json['participant']['final_rank'])
+
+    if tournament_id not in target_player_tournaments:
+      target_player_tournaments.append(tournament_id)
+
+    doc = {
+      'seedings'    : target_player_seedings,
+      'placings'    : target_player_placings,
+      'tournaments' : target_player_tournaments
+    }
+
+    self.logger.info("updating placings, seedings, and tournmanets for player_id: %s" %str(player_id))
+
+    self.elasticsearch_client.update(index=self.PLAYER_INDEX_NAME,
+                                      doc_type='player',
+                                      id=player_id,
+                                      body={'doc':doc})
+
+    return
+
+  '''
+  Arg: player_tag
+  Abs: retrieves result response from es cluster client's match query by player tag
+  Ret: res int
+  TO DO: Perform all index refreshes in final call just before all match queries
+  '''
+  def update_player_matches(self, player_id, match_json):
+    target_player_json = self.search_for_player_by_id(player_id)
+    target_player_id = self.retrieve_player_id(target_player_json)
+    target_player_matches = self.retrieve_player_matches(target_player_json)
+    match_id = int(match_json['match']['id'])
+    if match_id not in target_player_matches:
+      target_player_matches.append(match_id)
+
+    doc = {
+      'matches' : target_player_matches
+    }
+
+    self.logger.info("updating matches for player_id: %s" %str(target_player_id))
+
+    self.elasticsearch_client.update(index=self.PLAYER_INDEX_NAME,
+                                      doc_type='player',
+                                      id=target_player_id,
+                                      body={'doc':doc})
+
+    return
