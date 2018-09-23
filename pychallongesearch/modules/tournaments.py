@@ -7,7 +7,8 @@
 #
 #    Note: This is entirely different from the Bracket Module; Bracket module is parent domain object that holds all
 #    important information regarding a bracket's players, matches, and tournament information. Tournament domain object
-#    does not include information like player performance or match history
+#    does not include information like player performance or match history until it is inserted into ES with a list of 
+#    match ids and player ids
 #
 ############################################################################################################################
 

@@ -5,6 +5,8 @@
 #    Players Module:
 #    Holds all Repository actions for a player data type (exists, insert, search, update, delete)
 #
+#    A participant becomes a player when it is inserted from a bracket into ES
+#
 ############################################################################################################################
 
 class players(object):

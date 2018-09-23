@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import json
 
 ############################################################################################################################
 #
@@ -18,9 +19,6 @@ class brackets(object):
 		self.elasticsearch_client = parent.elasticsearch_client
 		self.logger = parent.logger
 
-	def test(self):
-		self.logger.info("indices test")
-
 	#Given a directory, look at all of the tournaments, matches, and player files
 	#M	Load contents and strip prepending tourney ID (name)
 	#O	Merge sort 3 dirs according to ID ( order is 1, 10, 100, 101, 102 ... 109, 11, 110, 111, 112 ...)
@@ -39,6 +37,72 @@ class brackets(object):
 
 	def ingest_bracket(self):
 		self.logger.info("ingesting bracket")
+		tournament_arr = self.parent.challongefileutils.readTournamentJson("/home/pat/smashdb/data/tournaments/MNM/tournaments/MNM-1-tournament.json")
+		participants_arr = self.parent.challongefileutils.readParticipantsJson("/home/pat/smashdb/data/tournaments/MNM/participants/MNM-1-participants.json")
+		matches_arr = self.parent.challongefileutils.readParticipantsJson("/home/pat/smashdb/data/tournaments/MNM/matches/MNM-1-matches.json")
 
+		participants_old_ids = list()
+		participants_new_ids = list()
+		participants_old_player_ids_dict = dict()
+		#list of participant/player ids and matches to store in tournament obj
+		tournament_participants = list()
+		tournament_matches = list()
 
-		self.parent.challongefileutils.test()
+		for participant in participants_arr:
+
+			participant_json = json.loads(participant)
+			#participant_tag = parent.challongefileutils.mapUnfriendlyTag(participant_json['participant']['name'])
+			participant_tag = participant_json['participant']['name']
+
+			# if not self.parent.players.exists(participant_tag):
+			# 	self.parent.players.insert_player(participant_json)
+			# 	participant_new_id = int(participant_json['participant']['id'])
+			# 	participants_new_ids.append(participant_new_id)
+			# 	tournament_participants.append(participant_new_id)
+
+			# elif self.parent.players.exists(participant_tag):
+			# 	player_id = self.parent.players.retrieve_player_id_by_tag(participant_tag)
+			# 	participant_old_id = int(participant_json['participant']['id'])
+			# 	self.parent.players.update_seedings(player_id, participant_json)
+			# 	self.parent.players.update_placings(player_id, participant_json)
+			# 	participants_old_player_ids_dict[participant_old_id] = player_id
+			# 	participants_old_ids.append(participant_old_id)
+			# 	tournament_participants.append(player_id)
+
+		for match in matches_arr:
+			match_json = json.loads(match)
+			match_id = int(match_json['match']['id'])
+			winner_id = int(match_json['match']['winner_id'])
+			loser_id = int(match_json['match']['loser_id'])
+
+			# if winner_id in participants_new_ids and loser_id in participants_new_ids:
+			# 	self.parent.matches.insert_match(winner_id, loser_id, match_json)
+			# 	self.parent.players.update_matches(winner_id, match_id)
+			# 	self.parent.players.update_matches(loser_id, match_id)
+			# 	tournament_matches.append(match_id)
+
+			# elif winner_id in participants_new_ids and loser_id not in participants_new_ids:
+			# 	loser_existing_player_id = participants_old_player_ids_dict[loser_id]
+			# 	self.parent.matches.insert_match(winner_id, loser_existing_player_id, match_json)
+			# 	self.parent.players.update_matches(winner_id, match_id)
+			# 	self.parent.players.update_matches(loser_existing_player_id, match_id)
+			# 	tournament_matches.append(match_id)
+
+			# elif winner_id not in participants_new_ids and loser_id in participants_new_ids:
+			# 	winner_existing_player_id = participants_old_player_ids_dict[winner_id]
+			# 	self.parent.matches.insert_match(winner_existing_player_id, loser_id, match_json)
+			# 	self.parent.players.update_matches(winner_existing_player_id, match_id)
+			# 	self.parent.players.update_matches(loser_id, match_id)
+			# 	tournament_matches.append(match_id)
+
+			# elif winner_id in participants_old_ids and loser_id in participants_old_ids:
+			# 	winner_existing_player_id = participants_old_player_ids_dict[winner_id]
+			# 	loser_existing_player_id = participants_old_player_ids_dict[loser_id]
+			# 	self.parent.matches.insert_match(winner_existing_player_id, loser_existing_player_id, match_json)
+			# 	self.parent.players.update_matches(winner_existing_player_id, match_id)
+			# 	self.parent.players.update_matches(loser_existing_player_id, match_id)
+			# 	tournament_matches.append(match_id)
+
+		tournament_json = json.loads(tournament_arr[0])
+		# self.parent.tournaments.insert_tournament(tournament_json, tournament_participants, tournament_participants)
+		return
