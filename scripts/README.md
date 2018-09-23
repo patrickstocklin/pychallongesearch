@@ -1,14 +1,26 @@
 # How to Run
 
-### Bring up virtualenv, elasticsearch, run driver.py
+### Bring up virtualenv
+```
+~/pychallongesearch$ source .env
+```
+### Tear down virtualenv
+```
+~/pychallongesearch$ source .env
+```
+### Bring up virtualenv, elasticsearch, run deploy/driver.py
 ```
 ~/pychallongesearch$ source ./scripts/create_local_environment.sh
 ```
-### Tear down virtualenv, elasticsearch, clean up
+### Run all unittests against elasticsearch cluster
+```
+~/pychallongesearch$ source ./scripts/run_unit_tests.sh
+```
+### Tear down virtualenv, elasticsearch indices, clean up
 ```
 ~/pychallongesearch$ source ./scripts/teardown_local_environment.sh
 ```
-### Run all unittests against elasticsearch
+### Kill elasticsearch cluster, no clean up
 ```
-~/pychallongesearch$ source ./scripts/run_unit_tests.sh
+~/pychallongesearch$ source ./deploy/destroy_elasticsearch_cluster.sh
 ```
