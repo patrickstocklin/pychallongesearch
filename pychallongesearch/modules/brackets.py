@@ -59,14 +59,14 @@ class brackets(object):
 				participants_new_ids.append(participant_new_id)
 				tournament_participants.append(participant_new_id)
 
-			# elif self.parent.players.exists(participant_tag):
-			# 	player_id = self.parent.players.retrieve_player_id_by_tag(participant_tag)
-			# 	participant_old_id = int(participant_json['participant']['id'])
-			# 	self.parent.players.update_seedings(player_id, participant_json)
-			# 	self.parent.players.update_placings(player_id, participant_json)
-			# 	participants_old_player_ids_dict[participant_old_id] = player_id
-			# 	participants_old_ids.append(participant_old_id)
-			# 	tournament_participants.append(player_id)
+			elif self.parent.players.exists_by_player_tag(participant_tag):
+			 	target_player = self.parent.players.search_for_player_by_tag(participant_tag)
+			 	player_id = self.parent.players.retrieve_player_id(target_player)
+				participant_old_id = int(participant_json['participant']['id'])
+				self.parent.players.update_player_seedings_and_placings(player_id, participant_json)
+				participants_old_player_ids_dict[participant_old_id] = player_id
+				participants_old_ids.append(participant_old_id)
+				tournament_participants.append(player_id)
 
 		for match in matches_arr:
 			match_json = json.loads(match)
@@ -74,33 +74,33 @@ class brackets(object):
 			winner_id = int(match_json['match']['winner_id'])
 			loser_id = int(match_json['match']['loser_id'])
 
-			# if winner_id in participants_new_ids and loser_id in participants_new_ids:
+			if winner_id in participants_new_ids and loser_id in participants_new_ids:
 			# 	self.parent.matches.insert_match(winner_id, loser_id, match_json)
 			# 	self.parent.players.update_matches(winner_id, match_id)
 			# 	self.parent.players.update_matches(loser_id, match_id)
-			# 	tournament_matches.append(match_id)
+				tournament_matches.append(match_id)
 
-			# elif winner_id in participants_new_ids and loser_id not in participants_new_ids:
-			# 	loser_existing_player_id = participants_old_player_ids_dict[loser_id]
+			elif winner_id in participants_new_ids and loser_id not in participants_new_ids:
+				loser_existing_player_id = participants_old_player_ids_dict[loser_id]
 			# 	self.parent.matches.insert_match(winner_id, loser_existing_player_id, match_json)
 			# 	self.parent.players.update_matches(winner_id, match_id)
 			# 	self.parent.players.update_matches(loser_existing_player_id, match_id)
-			# 	tournament_matches.append(match_id)
+				tournament_matches.append(match_id)
 
-			# elif winner_id not in participants_new_ids and loser_id in participants_new_ids:
-			# 	winner_existing_player_id = participants_old_player_ids_dict[winner_id]
+			elif winner_id not in participants_new_ids and loser_id in participants_new_ids:
+				winner_existing_player_id = participants_old_player_ids_dict[winner_id]
 			# 	self.parent.matches.insert_match(winner_existing_player_id, loser_id, match_json)
 			# 	self.parent.players.update_matches(winner_existing_player_id, match_id)
 			# 	self.parent.players.update_matches(loser_id, match_id)
-			# 	tournament_matches.append(match_id)
+				tournament_matches.append(match_id)
 
-			# elif winner_id in participants_old_ids and loser_id in participants_old_ids:
-			# 	winner_existing_player_id = participants_old_player_ids_dict[winner_id]
-			# 	loser_existing_player_id = participants_old_player_ids_dict[loser_id]
+			elif winner_id in participants_old_ids and loser_id in participants_old_ids:
+				winner_existing_player_id = participants_old_player_ids_dict[winner_id]
+				loser_existing_player_id = participants_old_player_ids_dict[loser_id]
 			# 	self.parent.matches.insert_match(winner_existing_player_id, loser_existing_player_id, match_json)
 			# 	self.parent.players.update_matches(winner_existing_player_id, match_id)
 			# 	self.parent.players.update_matches(loser_existing_player_id, match_id)
-			# 	tournament_matches.append(match_id)
+				tournament_matches.append(match_id)
 
 		tournament_json = json.loads(tournament_arr[0])
 		# self.parent.tournaments.insert_tournament(tournament_json, tournament_participants, tournament_participants)

@@ -19,7 +19,7 @@ def main():
   pcsearch.indices.create_elasticsearch_indices()
   pcsearch.brackets.ingest_bracket();
   # pcsearch.indices.flush_elasticsearch_indices()
-  pcsearch.indices.delete_elasticsearch_indices()
+  # pcsearch.indices.delete_elasticsearch_indices()
   # pcsearch.indices.create_elasticsearch_indices()
 
 
