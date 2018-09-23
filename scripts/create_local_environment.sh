@@ -1,7 +1,8 @@
 #!/bin/bash
+#To do, use curl that uses HTTP status code, not YELLOW (200 good enough without needed indices)
+echo "Creating Ephemeral Environment on Localhost..."
 #This starts up the virtualenv
 source ./.env
-
 #This starts up elasticsearch if we need it in the bg
 ~/elasticsearch-6.4.0/bin/elasticsearch -p /tmp/elasticsearch-pid -d &
 
@@ -22,6 +23,7 @@ done
 
 if [ $health -eq 1 ]; then
   echo "Elasticsearch Cluster Failed to Reach Yellow Status"
+  source ./.deactivate-env
   return
 fi
 
@@ -32,4 +34,5 @@ python main.py
 pid=$(cat /tmp/elasticsearch-pid && echo)
 echo "Shutting down Elasticsearch Cluster"
 kill -SIGTERM $pid
+source ./.deactivate-env
 
