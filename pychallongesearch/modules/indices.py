@@ -36,6 +36,21 @@ class indices(object):
 			self.elasticsearch_client.indices.create(index=self.MATCH_INDEX_NAME)
 			self.logger.info('index with name %s created in elasticsearch' %str(self.MATCH_INDEX_NAME))
 
+	def flush_elasticsearch_indices(self):
+		self.logger.info('flushing elasticsearch indices')
+
+		if self.elasticsearch_client.indices.exists(index=self.TOURNAMENT_INDEX_NAME):
+			self.elasticsearch_client.indices.flush(index=self.TOURNAMENT_INDEX_NAME)
+			self.logger.info('index with name %s flushed in elasticsearch' %str(self.TOURNAMENT_INDEX_NAME))
+
+		if self.elasticsearch_client.indices.exists(index=self.PLAYER_INDEX_NAME):
+			self.elasticsearch_client.indices.flush(index=self.PLAYER_INDEX_NAME)
+			self.logger.info('index with name %s flushed in elasticsearch' %str(self.PLAYER_INDEX_NAME))
+
+		if self.elasticsearch_client.indices.exists(index=self.MATCH_INDEX_NAME):
+			self.elasticsearch_client.indices.flush(index=self.MATCH_INDEX_NAME)
+			self.logger.info('index with name %s flushed in elasticsearch' %str(self.MATCH_INDEX_NAME))
+
 	def delete_elasticsearch_indices(self):
 		self.logger.info('destroying elasticsearch indices')
 
