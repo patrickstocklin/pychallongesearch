@@ -2,16 +2,14 @@
 
 ############################################################################################################################
 #
-# INSERT, RETRIEVE, RETRIEVE FIELD, SEARCH, UPDATE
+#    Matches Module:
+#    Holds all Repository actions for a match data type (exists, insert, search, update, delete)
 #
 ############################################################################################################################
 
-class query(object):
+class matches(object):
 
 	def __init__(self, parent):
 		self.parent = parent
 		self.elasticsearch_client = parent.elasticsearch_client
 		self.logger = parent.logger
-
-	def test(self):
-		self.logger.info("retrieve test")

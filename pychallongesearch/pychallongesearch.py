@@ -2,7 +2,9 @@
 from utils import challongefileutils
 from modules import indices
 from modules import brackets
-from modules import query
+from modules import tournaments
+from modules import players
+from modules import matches
 from modules import stats
 from elasticsearch import Elasticsearch
 import json
@@ -19,11 +21,10 @@ import logging
 #    Brackets.
 #
 #	 TO DO:
-#    1) challongefileutils, help me look at a bracket, split the contents into digestible bits, then insert
-#	 2) Work out query, then bracket (ingest)
+#	 1) Work out query, then bracket (ingest)
 #
 #	 Nice to haves:
-#    Do we store constants somewhere?
+#    Do we store constants somewhere? Index Names, Target Dir, Etc Etc
 #
 ############################################################################################################################
 '''
@@ -53,10 +54,14 @@ class PyChallongeSearch(object):
 
 		#Indices, Brackets (ingest), Query (search/retrieve, insert, update, delete), Stats
 		self.indices = indices.indices(self)
+		#Have a module for each Data Obj (bracket, tournament, match, participant) and 
 		self.brackets = brackets.brackets(self)
-		self.query = query.query(self)
+		self.tournaments = tournaments.tournaments(self)
+		self.matches = matches.matches(self)
+		self.players = players.players(self)
+		#Have a module for various stat queries that fall outside of a domain object
 		self.stats = stats.stats(self)
-
+		
 		###################################################################
 		# FILESYSTEM HELPER FUNCTIONS (should take in a directory arg tbh)
 		###################################################################
