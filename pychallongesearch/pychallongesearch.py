@@ -49,7 +49,7 @@ class PyChallongeSearch(object):
 		##################################################################
 		# CLIENT AND MODULES
 		##################################################################
-		self.elasticsearch_client = Elasticsearch([host + ":" + port], timeout = 1)
+		self.elasticsearch_client = Elasticsearch([host + ":" + port], timeout = 3)
 		self.health_check()
 
 		#Indices, Brackets (ingest), Query (search/retrieve, insert, update, delete), Stats
@@ -68,7 +68,7 @@ class PyChallongeSearch(object):
 		self.challongefileutils = challongefileutils.challongefileutils(self)
 
 	def health_check(self):
-		if(self.elasticsearch_client.cluster.health(wait_for_status='yellow', request_timeout=1)):
+		if(self.elasticsearch_client.cluster.health(wait_for_status='yellow', request_timeout=3)):
 			self.logger.info("Cluster is healthy!")
 		else:
 			raise Exception("Cluster is not healthy!")
