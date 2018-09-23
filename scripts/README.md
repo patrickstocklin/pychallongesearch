@@ -6,7 +6,7 @@
 ```
 ### Tear down virtualenv
 ```
-~/pychallongesearch$ source .env
+~/pychallongesearch$ source .deactivate-env
 ```
 ### Bring up virtualenv, elasticsearch, run deploy/driver.py
 ```
