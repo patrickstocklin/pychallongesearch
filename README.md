@@ -32,6 +32,11 @@
 (pychallongesearch)~/pychallongesearch$ source ./scripts/health_check.sh
 ```
 
+### Run Drivers
+```
+(pychallongesearch)~/pychallongesearch$ python [driver.py]
+```
+
 ### Run Tests
 ```
 (pychallongesearch)~/pychallongesearch$ source ./scripts/run_unit_tests.sh
