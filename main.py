@@ -16,11 +16,11 @@ def main():
   #pcsearch.challongefileutils.readParticipantsJson("/home/pat/smashdb/data/tournaments/MNM/participants/MNM-1-participants.json")
   #pcsearch.challongefileutils.readParticipantsJson("/home/pat/smashdb/data/tournaments/MNM/matches/MNM-1-matches.json")
 
-
+  pcsearch.indices.create_elasticsearch_indices()
   pcsearch.brackets.ingest_bracket();
   # pcsearch.indices.flush_elasticsearch_indices()
   pcsearch.indices.delete_elasticsearch_indices()
-  pcsearch.indices.create_elasticsearch_indices()
+  # pcsearch.indices.create_elasticsearch_indices()
 
 
   # pcsearch.stats.test()   //analysis 
