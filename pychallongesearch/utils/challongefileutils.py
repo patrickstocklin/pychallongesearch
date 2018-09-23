@@ -7,108 +7,114 @@
 ############################################################################################################################
 
 class challongefileutils(object):
-	
-	def __init__(self, parent):
-		self.parent = parent
-		self.logger = parent.logger
 
-	'''
-	Arg: tournamentJsonFile by path
-	Ret: json[] of tournamentJson from file (count: 1)
+  def __init__(self, parent):
+    self.parent = parent
+    self.logger = parent.logger
 
-	TO DO: FileIO Error Catching
-	'''
-	def readTournamentJson(self, tournamentJsonFile):
-		self.logger.info("Reading Tournament Json from File: %s" %str(tournamentJsonFile))
+  def mapUnfriendlyPlayerTag(self, player_tag):
+    if player_tag == '&':
+      return "Ampersand"
+    else:
+      return player_tag
 
-		jsonStringBuffer = str()
-		tournamentJsonArray = list()
+  '''
+  Arg: tournamentJsonFile by path
+  Ret: json[] of tournamentJson from file (count: 1)
 
-		with open(tournamentJsonFile) as file:
-			for line in file:
-				jsonStringBuffer += line.strip()
-			file.close()
+  TO DO: FileIO Error Catching
+  '''
+  def readTournamentJson(self, tournamentJsonFile):
+    self.logger.info("Reading Tournament Json from File: %s" %str(tournamentJsonFile))
 
-		tournamentJsonArray.append(jsonStringBuffer)
+    jsonStringBuffer = str()
+    tournamentJsonArray = list()
 
-		self.logger.info("Successfully loaded Tournament from Json: %s" %str(tournamentJsonFile))
-		return tournamentJsonArray
+    with open(tournamentJsonFile) as file:
+      for line in file:
+        jsonStringBuffer += line.strip()
+      file.close()
 
-	'''
-	Arg: participantsJson by path
-	Abs: runs through participants file, removes brackets and adds braces to reform json
-	Ret: json[] of participantsJson from file (count: N Participants)
+    tournamentJsonArray.append(jsonStringBuffer)
 
-	TO DO: FileIO Error Catching
-	'''
-	def readParticipantsJson(self, participantsJsonFile):
-		self.logger.info("Reading Participants Json from File: %s" %str(participantsJsonFile))
+    self.logger.info("Successfully loaded Tournament from Json: %s" %str(tournamentJsonFile))
+    return tournamentJsonArray
 
-		jsonStringBuffer = str()
-		participantsJsonArray = list()
+  '''
+  Arg: participantsJson by path
+  Abs: runs through participants file, removes brackets and adds braces to reform json
+  Ret: json[] of participantsJson from file (count: N Participants)
 
-		with open(participantsJsonFile) as file:
-			for line in file:
-				jsonStringBuffer += line.strip()
-			file.close()
+  TO DO: FileIO Error Catching
+  '''
+  def readParticipantsJson(self, participantsJsonFile):
+    self.logger.info("Reading Participants Json from File: %s" %str(participantsJsonFile))
 
-		participantsJsonArray = jsonStringBuffer.split('},{')
-		
-		#Grab the final index of array for bracket ('[', ']') removal
-		endIndex = len(participantsJsonArray) - 1
-		
-		participantsJsonArray[0] = participantsJsonArray[0][1:]
-		participantsJsonArray[endIndex] = participantsJsonArray[endIndex][:-1]
+    jsonStringBuffer = str()
+    participantsJsonArray = list()
 
-		#Prepend and Append curly braces where necessary
-		for i in range(0, len(participantsJsonArray)):
-			if i != 0 and i != endIndex:
-				participantsJsonArray[i] = '{' + participantsJsonArray[i] + '}'
-			elif i == 0:
-				participantsJsonArray[i] = participantsJsonArray[i] + '}'
-			elif i == endIndex:
-				participantsJsonArray[i] = '{' + participantsJsonArray[i]
+    with open(participantsJsonFile) as file:
+      for line in file:
+        jsonStringBuffer += line.strip()
+      file.close()
 
-		#Lets see what this looks like
-		self.logger.info("Successfully loaded Participants from Json: %s" %str(participantsJsonFile))
-		return participantsJsonArray
+    participantsJsonArray = jsonStringBuffer.split('},{')
+    
+    #Grab the final index of array for bracket ('[', ']') removal
+    endIndex = len(participantsJsonArray) - 1
+    
+    participantsJsonArray[0] = participantsJsonArray[0][1:]
+    participantsJsonArray[endIndex] = participantsJsonArray[endIndex][:-1]
 
-		'''
-	Arg: matchesJson by path
-	Abs: runs through matches file, removes brackets and adds braces to reform json
-	Ret: json[] of matchesJson from file (count: N Matches)
+    #Prepend and Append curly braces where necessary
+    for i in range(0, len(participantsJsonArray)):
+      if i != 0 and i != endIndex:
+        participantsJsonArray[i] = '{' + participantsJsonArray[i] + '}'
+      elif i == 0:
+        participantsJsonArray[i] = participantsJsonArray[i] + '}'
+      elif i == endIndex:
+        participantsJsonArray[i] = '{' + participantsJsonArray[i]
 
-	TO DO: FileIO Error Catching
-	'''
-	def readMatches(self, matchesJsonFile):
-		self.logger.info("Reading Matches Json from File: %s" %str(matchesJsonFile))
+    #Lets see what this looks like
+    self.logger.info("Successfully loaded Participants from Json: %s" %str(participantsJsonFile))
+    return participantsJsonArray
 
-		jsonStringBuffer = str()
-		matchesJsonArray = list()
+  '''
+  Arg: matchesJson by path
+  Abs: runs through matches file, removes brackets and adds braces to reform json
+  Ret: json[] of matchesJson from file (count: N Matches)
 
-		with open(matchesJsonFile) as file:
-			for line in file:
-				jsonStringBuffer += line.strip()
-			file.close()
+  TO DO: FileIO Error Catching
+  '''
+  def readMatches(self, matchesJsonFile):
+    self.logger.info("Reading Matches Json from File: %s" %str(matchesJsonFile))
 
-		matchesJsonArray = jsonStringBuffer.split('},{')
-		
-		#Grab the final index of array for bracket ('[', ']') removal
-		endIndex = len(matchesJsonArray) - 1
-		
-		matchesJsonArray[0] = matchesJsonArray[0][1:]
-		matchesJsonArray[endIndex] = matchesJsonArray[endIndex][:-1]
+    jsonStringBuffer = str()
+    matchesJsonArray = list()
 
-		#Prepend and Append curly braces where necessary
-		for i in range(0, len(matchesJsonArray)):
-			if i != 0 and i != endIndex:
-				matchesJsonArray[i] = '{' + matchesJsonArray[i] + '}'
-			elif i == 0:
-				matchesJsonArray[i] = matchesJsonArray[i] + '}'
-			elif i == endIndex:
-				matchesJsonArray[i] = '{' + matchesJsonArray[i]
+    with open(matchesJsonFile) as file:
+      for line in file:
+        jsonStringBuffer += line.strip()
+      file.close()
 
-		self.logger.info("Successfully loaded Matches from Json: %s" %str(matchesJsonFile))
-		return matchesJsonArray
+    matchesJsonArray = jsonStringBuffer.split('},{')
+    
+    #Grab the final index of array for bracket ('[', ']') removal
+    endIndex = len(matchesJsonArray) - 1
+    
+    matchesJsonArray[0] = matchesJsonArray[0][1:]
+    matchesJsonArray[endIndex] = matchesJsonArray[endIndex][:-1]
 
-		
+    #Prepend and Append curly braces where necessary
+    for i in range(0, len(matchesJsonArray)):
+      if i != 0 and i != endIndex:
+        matchesJsonArray[i] = '{' + matchesJsonArray[i] + '}'
+      elif i == 0:
+        matchesJsonArray[i] = matchesJsonArray[i] + '}'
+      elif i == endIndex:
+        matchesJsonArray[i] = '{' + matchesJsonArray[i]
+
+    self.logger.info("Successfully loaded Matches from Json: %s" %str(matchesJsonFile))
+    return matchesJsonArray
+
+    
