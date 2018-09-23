@@ -52,7 +52,6 @@ class players(object):
 
   def insert_player(self, player_json):
     player_tag = self.parent.challongefileutils.mapUnfriendlyPlayerTag(player_json['participant']['name'])
-    player_tag = player_json['participant']['name']
     player_id = int(player_json['participant']['id'])
     tournament_id = int(player_json['participant']['tournament_id'])
     seedings_dict = {tournament_id:int(player_json['participant']['seed'])}

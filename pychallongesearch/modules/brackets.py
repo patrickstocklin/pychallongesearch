@@ -51,9 +51,8 @@ class brackets(object):
 		for participant in participants_arr:
 
 			participant_json = json.loads(participant)
-			#participant_tag = parent.challongefileutils.mapUnfriendlyTag(participant_json['participant']['name'])
-			participant_tag = participant_json['participant']['name']
-			
+			participant_tag = self.parent.challongefileutils.mapUnfriendlyPlayerTag(participant_json['participant']['name'])
+
 			if not self.parent.players.exists_by_player_tag(participant_tag):
 				self.parent.players.insert_player(participant_json)
 				participant_new_id = int(participant_json['participant']['id'])
