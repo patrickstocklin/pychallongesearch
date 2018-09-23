@@ -42,7 +42,7 @@
 (pychallongesearch)~/pychallongesearch$ source ./scripts/teardown_local_environment.sh
 ```
 
-### Disaster (Killed Elasticsearch Cluster)
+### Disaster Scenario (Killed Elasticsearch Cluster)
 ```
 (pychallongesearch)~/pychallongesearch$ source ./scripts/destroy_elasticsearch_cluster.sh
 ```
