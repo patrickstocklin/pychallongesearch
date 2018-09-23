@@ -22,5 +22,5 @@
 ```
 ### Kill elasticsearch cluster, no clean up
 ```
-~/pychallongesearch$ source ./deploy/destroy_elasticsearch_cluster.sh
+~/pychallongesearch$ source ./scripts/destroy_elasticsearch_cluster.sh
 ```
