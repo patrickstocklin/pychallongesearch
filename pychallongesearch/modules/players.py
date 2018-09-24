@@ -164,9 +164,11 @@ class players(object):
     target_player_placings = self.retrieve_player_placings(target_player_json)
     tournament_id = int(participant_json['participant']['tournament_id'])
 
-    target_player_seedings[tournament_id] = int(participant_json['participant']['seed'])
-    target_player_placings[tournament_id] = int(participant_json['participant']['final_rank'])
-
+    #Need to only uniquely add dict k/v
+    if tournament_id not in target_player_seedings:
+      target_player_seedings[str(tournament_id)] = int(participant_json['participant']['seed'])
+    if tournament_id not in target_player_placings:
+      target_player_placings[str(tournament_id)] = int(participant_json['participant']['final_rank'])
     if tournament_id not in target_player_tournaments:
       target_player_tournaments.append(tournament_id)
 
@@ -176,7 +178,7 @@ class players(object):
       'tournaments' : target_player_tournaments
     }
 
-    self.logger.info("updating placings, seedings, and tournmanets for player_id: %s" %str(player_id))
+    # self.logger.info("updating placings, seedings, and tournaments for player_id: %s" %str(player_id))
 
     self.elasticsearch_client.update(index=self.PLAYER_INDEX_NAME,
                                       doc_type='player',
@@ -203,7 +205,7 @@ class players(object):
       'matches' : target_player_matches
     }
 
-    self.logger.info("updating matches for player_id: %s" %str(target_player_id))
+    # self.logger.info("updating matches for player_id: %s" %str(target_player_id))
 
     self.elasticsearch_client.update(index=self.PLAYER_INDEX_NAME,
                                       doc_type='player',
