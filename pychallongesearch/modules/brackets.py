@@ -103,6 +103,5 @@ class brackets(object):
 				tournament_matches.append(match_id)
 
 		tournament_json = json.loads(tournament_arr[0])
-		#TODO
-		# self.parent.tournaments.insert_tournament(tournament_json, tournament_participants, tournament_participants)
+		self.parent.tournaments.insert_tournament(tournament_json, tournament_participants, tournament_participants)
 		return
