@@ -30,6 +30,6 @@ fi
 if [ $HTTPSTATUS -eq 200 ]; then
   echo "Elasticsearch Cluster Reached Healthy Status"
   echo "Execution of driver function"
-  python deploy/ingest_tournament_data.py
+  python deploy/driver.py
 fi
 #Run your driver to insert data
