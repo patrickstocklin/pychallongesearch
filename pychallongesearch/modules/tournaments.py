@@ -34,6 +34,11 @@ class tournaments(object):
     tournament_url = str(tournament_json['tournament']['full_challonge_url'])
     tournament_participant_count = int(tournament_json['tournament']['participants_count'])
     tournament_date = str(tournament_json['tournament']['created_at'])
+
+    #Get rid of these, testing
+    tournament_matches = []
+    tournament_participants = []
+
     doc = {
             'id' : tournament_id,
             'name' : tournament_name,

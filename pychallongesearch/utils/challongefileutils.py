@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
-
+import re
+from os import listdir
+from os.path import isfile, join
 ############################################################################################################################
 #
 # Helps us with handling the Challonge JSONs we just downloaded
@@ -86,7 +88,7 @@ class challongefileutils(object):
 
   TO DO: FileIO Error Catching
   '''
-  def readMatches(self, matchesJsonFile):
+  def readMatchesJson(self, matchesJsonFile):
     self.logger.info("Reading Matches Json from File: %s" %str(matchesJsonFile))
 
     jsonStringBuffer = str()
@@ -117,4 +119,42 @@ class challongefileutils(object):
     self.logger.info("Successfully loaded Matches from Json: %s" %str(matchesJsonFile))
     return matchesJsonArray
 
-    
+  '''
+  Arg: ~/smashdb/data/tournaments/
+  Abs: runs through files in matches, participants, tournaments
+  Ret: tuple of lists of files as strings
+
+  TO DO: FileIO Error Catching
+  '''
+  def createSortedDictsOfFilesInTournamentSeriesDirectory(self, targetDirectory):
+    self.logger.info("Listing Files in TournamentSeries Dir: %s" %str(targetDirectory))
+    targetMatchesDirectory = targetDirectory+"/matches/"
+    targetParticipantsDirectory = targetDirectory+"/participants/"
+    targetTournamentsDirectory = targetDirectory+"/tournaments/"
+
+    dictOfMatchesFiles = {self.getFileId(f): \
+                          targetMatchesDirectory + f for f in listdir(targetMatchesDirectory) \
+                          if isfile(join(targetMatchesDirectory, f))}
+    dictOfParticipantsFiles = {self.getFileId(f): \
+                          targetParticipantsDirectory + f for f in listdir(targetParticipantsDirectory) \
+                          if isfile(join(targetParticipantsDirectory, f))}
+    dictOfTournamentsFiles = {self.getFileId(f): \
+                          targetTournamentsDirectory + f for f in listdir(targetTournamentsDirectory) \
+                          if isfile(join(targetTournamentsDirectory, f))}
+
+    #Sort, count len of each and assert equality in number of files, return
+    sortedDictOfMatchesFiles = sorted(dictOfMatchesFiles.items(), key=lambda x: int(x[0]))
+    print sortedDictOfMatchesFiles
+    sortedDictOfParticipantsFiles = sorted(dictOfParticipantsFiles.items(), key=lambda x: int(x[0]))
+    print sortedDictOfParticipantsFiles
+    sortedDictOfTournamentsFiles = sorted(dictOfTournamentsFiles.items(), key=lambda x: int(x[0]))
+    print sortedDictOfTournamentsFiles
+
+    self.logger.info("Successfully listed Files from TournamentSeries Dir: %s" %str(targetDirectory))
+    return sortedDictOfMatchesFiles,sortedDictOfParticipantsFiles,sortedDictOfTournamentsFiles
+
+  def getFileId(self, targetFile):
+    match = re.search(r'\d+', targetFile)
+    id = match.group(0)
+    print targetFile, id
+    return id
