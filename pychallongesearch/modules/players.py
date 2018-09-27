@@ -172,7 +172,8 @@ class players(object):
     if tournament_id not in target_player_tournaments:
       target_player_tournaments.append(tournament_id)
 
-    target_player_tournaments = []
+    # testing remove
+    # target_player_tournaments = []
     doc = {
       'seedings'    : target_player_seedings,
       'placings'    : target_player_placings,

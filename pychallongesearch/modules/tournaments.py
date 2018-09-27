@@ -36,8 +36,8 @@ class tournaments(object):
     tournament_date = str(tournament_json['tournament']['created_at'])
 
     #Get rid of these, testing
-    tournament_matches = []
-    tournament_participants = []
+    # tournament_matches = []
+    # tournament_participants = []
 
     doc = {
             'id' : tournament_id,
